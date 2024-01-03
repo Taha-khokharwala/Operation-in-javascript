@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 20%;
+            margin-top: 20px;
+        }
+        table, th, td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="insertData(event)" id="dataForm">
+
+        <label for="email">email</label>
+        <input type="email" id="email"  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+        <br><br>
+        
+        <label for="password">password</label>
+        <input type="password" id="password" required>
+        
+        <br><br>
+        <button type="submit">Submit</button>
+        
+        <table id="dataTable">
+            <tr>
+                <th>email</th>
+                <th>password</th>
+                <th>action</th>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function insertData(e){
+            e.preventDefault();
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var table = document.getElementById("dataTable");
+            var row = table.insertRow(-1);
+            var colum = row.insertCell(0);
+            var colum1 =row.insertCell(1);
+            var colum2 =row.insertCell(2);
+
+            colum.innerHTML = email;
+            colum1.innerHTML = password;
+            colum2.innerHTML = "<button onclick='updateData(this)'>Update</button>";
+            colum2.innerHTML += '<button onclick="deleteData(this)">Delete</button>'
+
+            document.getElementById('email').value  = '';
+            document.getElementById('password').value = '';
+
+        }
+
+        function updateData(button) {
+            var row = button.parentNode.parentNode;
+            var email = row.cells[0].innerHTML;
+            var password = row.cells[1].innerHTML;
+
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+
+            row.parentNode.removeChild(row);
+        }
+
+        function deleteData(button){
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+        </script>
+    </body>
+</html>
